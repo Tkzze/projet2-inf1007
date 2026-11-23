@@ -4,8 +4,6 @@
 
 Application Tkinter qui estime le **coût médical annuel facturé à l'assurance** d'une personne à partir de son âge, de son IMC, de son nombre d'enfants, de son sexe, de son statut de fumeur et de sa région de résidence (États-Unis). Un utilisateur peut voir comment ces facteurs, et surtout le tabagisme, font varier le coût estimé.
 
-> ⚠️ **Exercice pédagogique.** Cet outil n'est pas une aide à la décision médicale, financière ou d'assurance. Les données sont américaines et simulées.
-
 ## Jeu de données
 
 | | |
