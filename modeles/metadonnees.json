@@ -1,0 +1,183 @@
+{
+  "date_entrainement": "2026-11-23T07:02:09",
+  "version_scikit_learn": "1.9.1",
+  "source": "Kaggle — Medical Cost Personal Datasets (insurance.csv)",
+  "cible": "charges",
+  "libelle_cible": "Coût médical annuel ($ US)",
+  "colonnes": [
+    "age",
+    "bmi",
+    "children",
+    "sex",
+    "smoker",
+    "region"
+  ],
+  "variables": [
+    {
+      "nom": "age",
+      "type": "numerique",
+      "libelle": "Âge (années)",
+      "minimum": 18.0,
+      "maximum": 64.0,
+      "entier": true
+    },
+    {
+      "nom": "bmi",
+      "type": "numerique",
+      "libelle": "Indice de masse corporelle (IMC)",
+      "minimum": 15.96,
+      "maximum": 53.13,
+      "entier": false
+    },
+    {
+      "nom": "children",
+      "type": "numerique",
+      "libelle": "Nombre d'enfants à charge",
+      "minimum": 0.0,
+      "maximum": 5.0,
+      "entier": true
+    },
+    {
+      "nom": "sex",
+      "type": "categorielle",
+      "libelle": "Sexe",
+      "categories": {
+        "female": "Femme",
+        "male": "Homme"
+      }
+    },
+    {
+      "nom": "smoker",
+      "type": "categorielle",
+      "libelle": "Fumeur",
+      "categories": {
+        "no": "Non",
+        "yes": "Oui"
+      }
+    },
+    {
+      "nom": "region",
+      "type": "categorielle",
+      "libelle": "Région de résidence (États-Unis)",
+      "categories": {
+        "northeast": "Nord-Est",
+        "northwest": "Nord-Ouest",
+        "southeast": "Sud-Est",
+        "southwest": "Sud-Ouest"
+      }
+    }
+  ],
+  "nettoyage": {
+    "lignes_initiales": 1338,
+    "lignes_incompletes_retirees": 0,
+    "doublons_retires": 1,
+    "valeurs_impossibles_retirees": 0,
+    "valeurs_aberrantes_cible_conservees": 139,
+    "lignes_finales": 1337
+  },
+  "graine": 42,
+  "proportion_test": 0.2,
+  "lignes_entrainement": 1069,
+  "lignes_test": 268,
+  "metrique_principale": "mae",
+  "modele_retenu": "foret",
+  "nom_modele_retenu": "Forêt aléatoire",
+  "metriques": {
+    "reference": {
+      "mae": 9861.797880026175,
+      "rmse": 13612.426003009037,
+      "r2": -0.008391982350864469
+    },
+    "lineaire": {
+      "mae": 4177.045561036321,
+      "rmse": 5956.3428943635845,
+      "r2": 0.8069287081198014
+    },
+    "foret": {
+      "mae": 2420.0798905244064,
+      "rmse": 4244.389049549922,
+      "r2": 0.9019632984742749
+    }
+  },
+  "durees_entrainement_s": {
+    "reference": 0.013883973000019978,
+    "lineaire": 0.005619385999921178,
+    "foret": 0.2016778559999466
+  },
+  "erreur_absolue_80": 2574.9176566861743,
+  "importances": {
+    "smoker": 1.3752918347628358,
+    "bmi": 0.23984527930076832,
+    "age": 0.1573284176650555,
+    "children": 0.011169514932413171,
+    "region": 0.001120461935827699,
+    "sex": -0.0003065525487407683
+  },
+  "distribution_cible": {
+    "bords": [
+      1121.8739,
+      3170.9072063333333,
+      5219.940512666666,
+      7268.973819000001,
+      9318.007125333334,
+      11367.040431666666,
+      13416.073738000001,
+      15465.107044333334,
+      17514.140350666665,
+      19563.173657,
+      21612.20696333333,
+      23661.240269666665,
+      25710.273576,
+      27759.30688233333,
+      29808.340188666665,
+      31857.373494999996,
+      33906.40680133333,
+      35955.44010766666,
+      38004.473414,
+      40053.50672033333,
+      42102.54002666666,
+      44151.573333,
+      46200.60663933333,
+      48249.63994566666,
+      50298.673252,
+      52347.70655833333,
+      54396.73986466666,
+      56445.77317099999,
+      58494.80647733333,
+      60543.83978366666,
+      62592.87309
+    ],
+    "comptes": [
+      158,
+      138,
+      128,
+      111,
+      108,
+      96,
+      50,
+      27,
+      36,
+      24,
+      24,
+      21,
+      17,
+      11,
+      5,
+      8,
+      15,
+      20,
+      15,
+      14,
+      11,
+      10,
+      12,
+      7,
+      1,
+      0,
+      0,
+      0,
+      1,
+      1
+    ]
+  }
+}
