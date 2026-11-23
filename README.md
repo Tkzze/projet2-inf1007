@@ -99,12 +99,12 @@ projet2-inf1007/
 - Validation : une saisie vide, non numérique, non entière ou hors intervalle affiche un message clair en rouge. Toutes les erreurs sont listées en même temps, sans plantage.
 - Le bouton **Prédire** (ou Entrée) affiche le coût estimé et une fourchette probable en langage courant.
 - Graphique Matplotlib intégré : position de l'estimation dans la distribution des coûts. L'onglet *À propos du modèle* affiche l'importance des variables et les scores.
-- Historique : chaque prédiction est ajoutée à `historique/predictions.csv` et consultable dans l'onglet *Historique*.
+- Historique : chaque prédiction est ajoutée à `historique/predictions.csv` et consultable dans l'onglet *Historique*. Refaire une prédiction avec exactement les mêmes données que la précédente n'ajoute pas de ligne.
 - Un bandeau d'avertissement est affiché en permanence (domaine santé/assurance).
 
 ## Tests et couverture
 
-61 tests pytest (cas usuels, cas limites, cas d'erreur avec `pytest.raises`, flottants avec `pytest.approx`) répartis dans `tests/`.
+64 tests pytest (cas usuels, cas limites, cas d'erreur avec `pytest.raises`, flottants avec `pytest.approx`) répartis dans `tests/`.
 
 | Mesure (`coverage run -m pytest ; coverage report`) | Couverture |
 |---|---:|

@@ -210,8 +210,11 @@ class Application(tk.Tk):
         self._redessiner_distribution(prediction, fourchette)
 
         try:
-            self._historique.ajouter(valeurs, prediction)
-            self._message.config(text="Prédiction ajoutée à l'historique.", fg="grey25")
+            if self._historique.ajouter(valeurs, prediction) is None:
+                self._message.config(text="Mêmes données que la dernière prédiction : "
+                                          "historique inchangé.", fg="grey25")
+            else:
+                self._message.config(text="Prédiction ajoutée à l'historique.", fg="grey25")
         except OSError as erreur:
             self._message.config(text=f"Prédiction affichée, mais l'historique n'a pas pu être "
                                       f"enregistré : {erreur.strerror}", fg=COULEUR_ERREUR)

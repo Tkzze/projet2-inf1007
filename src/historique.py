@@ -33,8 +33,39 @@ class Historique:
         """Colonnes du fichier CSV."""
         return list(self._entetes)
 
-    def ajouter(self, valeurs: dict, prediction: float, date: datetime | None = None) -> dict:
+    @property
+    def caracteristiques(self) -> list[str]:
+        """Colonnes des valeurs saisies (toutes sauf la date et la prédiction)."""
+        return self._entetes[1:-1]
+
+    def derniere_entree(self) -> dict[str, str] | None:
+        """Retourne la dernière ligne écrite dans le fichier, ou ``None`` s'il est vide ou absent."""
+        lignes = self.lire(plus_recent_d_abord=False)
+        return lignes[-1] if lignes else None
+
+    def est_identique_a_la_derniere(self, valeurs: dict) -> bool:
+        """Indique si ``valeurs`` sont exactement celles de la dernière prédiction enregistrée.
+
+        Le CSV ne contient que du texte : on compare donc ``str(valeur)`` au texte
+        relu (``35`` et ``"35"``, ``26.5`` et ``"26.5"`` sont considérés égaux).
+
+        Args:
+            valeurs: valeurs validées ``{caractéristique: valeur}``.
+
+        Returns:
+            ``True`` si toutes les caractéristiques sont identiques, ``False`` sinon
+            (ou si l'historique est vide).
+        """
+        derniere = self.derniere_entree()
+        if derniere is None:
+            return False
+        return all(str(valeurs.get(c)) == derniere.get(c) for c in self.caracteristiques)
+
+    def ajouter(self, valeurs: dict, prediction: float, date: datetime | None = None) -> dict | None:
         """Ajoute une prédiction à la fin du fichier (crée le fichier et son en-tête au besoin).
+
+        Si les valeurs sont identiques à celles de la dernière prédiction enregistrée,
+        rien n'est écrit : refaire la même prédiction ne remplit pas l'historique.
 
         Args:
             valeurs: valeurs saisies ``{caractéristique: valeur}``.
@@ -42,15 +73,18 @@ class Historique:
             date: date de la prédiction (maintenant par défaut).
 
         Returns:
-            La ligne enregistrée.
+            La ligne enregistrée, ou ``None`` si elle n'a pas été ajoutée
+            parce qu'elle répète la dernière prédiction.
 
         Raises:
             DonneeInvalideError: s'il manque une caractéristique dans ``valeurs``.
             OSError: si le fichier ne peut pas être écrit (disque plein, droits…).
         """
-        manquantes = [c for c in self._entetes[1:-1] if c not in valeurs]
+        manquantes = [c for c in self.caracteristiques if c not in valeurs]
         if manquantes:
             raise DonneeInvalideError(f"Valeurs manquantes pour l'historique : {', '.join(manquantes)}.")
+        if self.est_identique_a_la_derniere(valeurs):
+            return None
         ligne = {"date": (date or datetime.now()).strftime("%Y-%m-%d %H:%M:%S")}
         ligne.update({c: valeurs[c] for c in self._entetes[1:-1]})
         ligne["prediction"] = round(float(prediction), 2)

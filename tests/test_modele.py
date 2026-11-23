@@ -184,6 +184,28 @@ def test_historique_vide_puis_ajout_et_tri(tmp_path):
     assert float(lignes[1]["prediction"]) == pytest.approx(4000.12)
 
 
+def test_historique_ignore_une_prediction_identique_a_la_derniere(tmp_path):
+    historique = Historique(str(tmp_path / "hist.csv"), ["age", "bmi", "smoker"])
+    valeurs = {"age": 35, "bmi": 26.5, "smoker": "no"}
+    assert historique.ajouter(valeurs, 6152.0) is not None
+    assert historique.ajouter(dict(valeurs), 6152.0) is None     # mêmes données : rien n'est ajouté
+    assert len(historique) == 1
+
+
+def test_historique_ajoute_si_une_valeur_change(tmp_path):
+    historique = Historique(str(tmp_path / "hist.csv"), ["age", "bmi", "smoker"])
+    historique.ajouter({"age": 35, "bmi": 26.5, "smoker": "no"}, 6152.0)
+    historique.ajouter({"age": 35, "bmi": 26.5, "smoker": "yes"}, 19509.0)   # une valeur change
+    historique.ajouter({"age": 35, "bmi": 26.5, "smoker": "no"}, 6152.0)     # différente de la dernière
+    assert len(historique) == 3
+
+
+def test_est_identique_a_la_derniere_historique_vide(tmp_path):
+    historique = Historique(str(tmp_path / "hist.csv"), ["age"])
+    assert historique.derniere_entree() is None
+    assert historique.est_identique_a_la_derniere({"age": 35}) is False
+
+
 def test_historique_valeur_manquante(tmp_path):
     historique = Historique(str(tmp_path / "hist.csv"), ["age", "smoker"])
     with pytest.raises(DonneeInvalideError):
